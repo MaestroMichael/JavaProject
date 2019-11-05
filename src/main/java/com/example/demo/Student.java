@@ -2,10 +2,10 @@ package com.example.demo;
 
 public class Student {
 
-    final long id;
-    final String name;
-    final String number;
-    final String grupa;
+    final public long id;
+    final public String name;
+    final public String number;
+    final public String grupa;
 
 
     public Student(long id, String name, String number, String grupa) {

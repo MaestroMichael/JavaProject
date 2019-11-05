@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,15 +15,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class PunktyController {
 
     private CopyOnWriteArrayList<String> users = new CopyOnWriteArrayList<>(Arrays.asList("Student 1", "Student 2", "Student 3"));
+    private StudentService service = new StudentService();
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    List<String> getUsers(){
-        return users;
+    //@RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/students", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Student> getUsers() {
+        return this.service.getStudents().asJava();
+        //return users;
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
-    int addUser(@RequestBody String name){
-        users.add(name);
-        return users.size();
+    @RequestMapping(value = "/students", method = RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+    //int addUser(@RequestBody String name)
+    public Student addUser(@RequestBody NewStudent student) {
+        //users.add(name);
+        //return users.size();
+        return this.service.addStudent(student);
     }
 }
