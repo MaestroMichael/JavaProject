@@ -4,14 +4,14 @@ public class Student {
 
     final public long id;
     final public String name;
-    final public String number;
+    final public String numer;
     final public String grupa;
 
 
-    public Student(long id, String name, String number, String grupa) {
+    public Student(long id, String name, String numer, String grupa) {
         this.id = id;
         this.name = name;
-        this.number = number;
+        this.numer = numer;
         this.grupa = grupa;
     }
 }
