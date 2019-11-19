@@ -2,8 +2,11 @@ package com.example.demo;
 
 
 import com.example.demo.db.StudentRepository;
+import com.example.demo.db.StudentRow;
 import io.vavr.collection.List;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Function;
 
 @Service
 public class StudentService {
@@ -13,11 +16,9 @@ public class StudentService {
 ////        return List.empty();
 //        return this.students;
 //    }
-    int id = 0;
+    //int id = 0;
 
-    public StudentService(StudentRepository repository) {
-        this.repository = repository;
-    }
+
 
 //    Student addStudent(NewStudent n_Student) {
 //
@@ -33,15 +34,25 @@ public class StudentService {
 //    }
 
     List<Student> getStudents() {
-        return List.ofAll(this.repository.findAll()).map(dbObj -> new Student(dbObj.getId(), dbObj.getName(), dbObj.getNumer(), dbObj.getGrupa()));
+        return List.ofAll(this.repository.findAll()).map(getStudentRowStudentFunction());
         // throw new UnsupportedOperationException();
     }
 
-    Student addStudent(final NewStudent newStudent) {
-        throw new UnsupportedOperationException();
+    private Function<StudentRow, Student> getStudentRowStudentFunction() {
+        return dbObj ->
+                new Student(dbObj.getId(), dbObj.getName(), dbObj.getNumer(), dbObj.getGrupa());
     }
 
-    private List<Student> students = List.empty();
+
+    Student addStudent(final NewStudent newStudent) {
+//        throw new UnsupportedOperationException();
+        StudentRow created = this.repository.save(new StudentRow(newStudent.name, newStudent.numer, newStudent.grupa));
+        return getStudentRowStudentFunction().apply(created);
+    }
+    public StudentService(StudentRepository repository) {
+        this.repository = repository;
+    }
+    // private List<Student> students = List.empty();
 
 
 }

@@ -1,11 +1,15 @@
 package com.example.demo.db;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class StudentRow {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String numer;
@@ -43,6 +47,12 @@ public class StudentRow {
         this.grupa = grupa;
     }
 
-    public StudentRow() {
+    protected StudentRow(){}
+
+
+    public StudentRow(String name,String numer,String grupa){
+        this.name=name;
+        this.numer=numer;
+        this.grupa=grupa;
     }
 }

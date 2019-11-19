@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface StudentRepository extends CrudRepository<StudentRow,Long> {
-    List<Student> getStudents();
-
-    Student addStudent(NewStudent student);
+//    List<Student> getStudents();
+//
+//    Student addStudent(NewStudent student);
 }

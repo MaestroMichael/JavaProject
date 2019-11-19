@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.db.StudentRepository;
 import io.vavr.collection.List;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +14,18 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class StudentServiceTest {
 
+
     @Autowired
     private StudentRepository repository;
 
     @Test
-    //test1
     public void getEmptyList() {
         final StudentService service = new StudentService(repository);
-        List<Student> students = service.getStudents();
-        assertTrue(students.isEmpty());
+//        List<Student> students = service.getStudents();
+//        assertTrue(students.isEmpty());
     }
 
     @Test
-    //test2
     public void addStudent() {
         final StudentService service = new StudentService(repository);
         final Student created = service.addStudent(new NewStudent("Student1", "1-2-3", "IP"));
@@ -49,4 +49,9 @@ public class StudentServiceTest {
         assertNotEquals(s1.id,s2.id);
         assertEquals(2,service.getStudents().size());
 }
+
+    @After
+    public void cleanAfterTest() {
+        this.repository.deleteAll();
+    }
 }
