@@ -1,5 +1,7 @@
 package com.example.demo.db;
 
+import com.example.demo.Student;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,6 +51,11 @@ public class StudentRow {
 
     protected StudentRow(){}
 
+    public Student toStudent(){return new Student(
+            this.getId(),
+            this.getName(),
+            this.getNumer(),
+            this.getGrupa()); }
 
     public StudentRow(String name,String numer,String grupa){
         this.name=name;

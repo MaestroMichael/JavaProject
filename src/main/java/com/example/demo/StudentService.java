@@ -34,21 +34,26 @@ public class StudentService {
 //    }
 
     List<Student> getStudents() {
-        return List.ofAll(this.repository.findAll()).map(getStudentRowStudentFunction());
+        return List.ofAll(this.repository.findAll()).map(StudentRow::toStudent);
         // throw new UnsupportedOperationException();
     }
 
-    private Function<StudentRow, Student> getStudentRowStudentFunction() {
-        return dbObj ->
-                new Student(dbObj.getId(), dbObj.getName(), dbObj.getNumer(), dbObj.getGrupa());
-    }
+//    private Function<StudentRow, Student> getStudentRowStudentFunction() {
+//        return dbObj ->
+//                new Student(dbObj.getId(), dbObj.getName(), dbObj.getNumer(), dbObj.getGrupa());
+//    }
 
 
-    Student addStudent(final NewStudent newStudent) {
-//        throw new UnsupportedOperationException();
-        StudentRow created = this.repository.save(new StudentRow(newStudent.name, newStudent.numer, newStudent.grupa));
-        return getStudentRowStudentFunction().apply(created);
-    }
+//    Student addStudent(final NewStudent newStudent) {
+////        throw new UnsupportedOperationException();
+//        StudentRow created = this.repository.save(new StudentRow(newStudent.name, newStudent.numer, newStudent.grupa));
+//        return getStudentRowStudentFunction().apply(created);
+//    }
+Student addStudent(final NewStudent newStudent) {
+    return this.repository.save(new StudentRow(
+            newStudent.name,
+            newStudent.numer,
+            newStudent.grupa)).toStudent();}
     public StudentService(StudentRepository repository) {
         this.repository = repository;
     }
