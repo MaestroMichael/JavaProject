@@ -1,10 +1,7 @@
 package com.example.demo;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,4 +39,20 @@ public class PunktyController {
         //return users.size();
         return this.service.addStudent(student);
     }
+
+    @RequestMapping(value =  "/students/{id}/numer/{numer}", method = RequestMethod.POST,produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Student setNumer(@PathVariable("id") long id, @PathVariable("numer") String numer) {
+        return this.service.changeNumber(id, numer).orElseThrow(
+                () -> new IllegalArgumentException("Student o id: " + id + " does not exist") );
+    }
+
+
+    @RequestMapping(value = "/students/{id}/score")
+    public int addScore(@PathVariable("id") long id,@RequestBody Score score){
+        return this.service.addScore(id, score)
+                .orElseThrow(
+                        ()->new NoStudentException(id));
+
+    }
+
 }

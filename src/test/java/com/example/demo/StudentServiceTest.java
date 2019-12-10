@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.db.ScoreRepository;
 import com.example.demo.db.StudentRepository;
 import io.vavr.collection.List;
 import org.junit.After;
@@ -17,17 +18,20 @@ public class StudentServiceTest {
 
     @Autowired
     private StudentRepository repository;
+    @Autowired
+    private ScoreRepository scoreRepository;
+
 
     @Test
     public void getEmptyList() {
-        final StudentService service = new StudentService(repository);
-//        List<Student> students = service.getStudents();
-//        assertTrue(students.isEmpty());
+        final StudentService service = new StudentService(repository, scoreRepository);
+        List<Student> students = service.getStudents();
+        assertTrue(students.isEmpty());
     }
 
     @Test
     public void addStudent() {
-        final StudentService service = new StudentService(repository);
+        final StudentService service = new StudentService(repository, scoreRepository);
         final Student created = service.addStudent(new NewStudent("Student1", "1-2-3", "IP"));
         assertNotNull(created);
 
@@ -35,7 +39,7 @@ public class StudentServiceTest {
 
 @Test
     public void addStudentIsReturned(){
-    final StudentService service = new StudentService(repository);
+    final StudentService service = new StudentService(repository, scoreRepository);
     final Student created = service.addStudent(new NewStudent("Student1", "1-2-3", "IP"));
     final List<Student> all = service.getStudents();
     assertEquals("Student1",all.head().name);
@@ -43,7 +47,7 @@ public class StudentServiceTest {
 
 @Test
     public void addStudnetsHasNewId(){
-        final StudentService service=new StudentService(repository);
+        final StudentService service=new StudentService(repository, scoreRepository);
         final Student s1=service.addStudent(new NewStudent("S1","123","ip30"));
         final Student s2=service.addStudent(new NewStudent("s2","234","ip30"));
         assertNotEquals(s1.id,s2.id);
